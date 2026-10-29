@@ -1,0 +1,52 @@
+﻿@model List<MiniStyleWebConsole.Domain.ProductSizeChart>
+
+<div class="card">
+    <div class="card-header" style="text-align:right">
+        
+    </div>
+    <div class="card-body">
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Age Group</th>
+                        <th>Wearable Part</th>
+                        <th>Number</th>
+                        <th>Shoulder</th>
+                        <th>Length</th>
+                        <th>Chest</th>
+                        <th>Sleeve Length</th>
+                        <th>Waist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.AgeGroup</td>
+                                <td>@item.WearablePart</td>
+                                <td>@item.Number</td>
+                                <td>@item.Shoulder</td>
+                                <td>@item.Length</td>
+                                <td>@item.Chest</td>
+                                <td>@item.SleeveLength</td>
+                                <td>@item.Waist</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-danger text-center">No record found!</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+<script src="@Url.Content("~/custom-js/size-chart/list.js")"></script>

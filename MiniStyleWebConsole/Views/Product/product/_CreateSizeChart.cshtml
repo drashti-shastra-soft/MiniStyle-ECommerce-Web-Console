@@ -1,0 +1,97 @@
+﻿@model MiniStyleWebConsole.Domain.ProductSizeChart
+
+<div class="modal fade" id="modal-size-chart" tabindex="-1" aria-labelledby="AgeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5">Add Size Chart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.ProductId)
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Wearable Part <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.WearablePart, ViewBag.WearablePart as SelectList, "Select Wearable Part", new { @class = "form-control" })
+                        <span class="text-danger" id="spnWearablePart"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Age Group <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.ProductAgeGroupId, ViewBag.AgeGroup as SelectList, "Select Age Group", new { @class = "form-control" })
+                        <span class="text-danger" id="spnAgeGroup"></span>
+                    </div>
+                    <div class="col">
+                        <label>Unit Type <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.UnitType, new List<SelectListItem> {
+                            new SelectListItem { Text = "cm", Value = "cm" },
+                            new SelectListItem { Text = "in", Value = "in" }
+                        }, "Select Unit Type", new { @class = "form-control" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div id="sharedFields">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Number <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Number, new { @class = "form-control", placeholder = "Enter Number" })
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label>Length <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Length, new { @class = "form-control", placeholder = "Enter Length" })
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Waist <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Waist, new { @class = "form-control", placeholder = "Enter Waist" })
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="topExtraFields">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Chest <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Chest, new { @class = "form-control", placeholder = "Enter Chest" })
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Shoulder <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Shoulder, new { @class = "form-control", placeholder = "Enter Shoulder" })
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <label>Sleeve Length <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.SleeveLength, new { @class = "form-control", placeholder = "Enter Sleeve Length" })
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="javascript:void(0);" class="btn btn-primary btn-submit">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/custom-js/size-chart/create.js")"></script>

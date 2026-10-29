@@ -1,0 +1,84 @@
+﻿<div class="card">
+    <div class="card-header text-right">
+        <a href="javascript:void(0)" class="btn btn-primary add-size-chart" data-product-id="@ViewBag.ProductId">Add Size Chart</a>
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-size-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active size-chart-nav-tab" id="custom-tabs-cm-tab" data-toggle="pill" href="#custom-tabs-cm" role="tab" aria-controls="custom-tabs-cm" aria-selected="true" data-id="@ViewBag.ProductId", data-unit-type="cm" data-tab="custom-tabs-cm">CM</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link size-chart-nav-tab" id="custom-tabs-inch-tab" data-toggle="pill" href="#custom-tabs-inch" role="tab" aria-controls="custom-tabs-inch" aria-selected="true" data-id="@ViewBag.ProductId" data-unit-type="in" data-tab="custom-tabs-inch">Inch</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-size-tabs-tabContent">
+                    <div class="tab-pane fade show active" id="custom-tabs-cm" role="tabpanel" aria-labelledby="custom-tabs-cm-tab">
+
+                    </div>
+                    <div class="tab-pane fade show" id="custom-tabs-inch" role="tabpanel" aria-labelledby="custom-tabs-inch-tab">
+
+                    </div>
+                </div>
+                <div id="divCreateSizeChartRow">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.size-chart-nav-tab').on('click', function () {
+            debugger
+            var productId = parseInt($(this).data('id'));
+            var unitType = $(this).data('unit-type');
+            var tabId = $(this).data('tab');
+            if (productId > 0) {
+                fnGetSizeChartRows(productId, unitType, tabId);
+            }
+        });
+
+        $('#custom-tabs-cm-tab').trigger('click');
+
+        $('.add-size-chart').on('click', function () {
+            var productId = parseInt($(this).data('product-id'));
+            if (productId > 0) {
+                fnCreate(productId)
+            }
+        });
+    });
+
+    function fnGetSizeChartRows(productId, unitType, tabId) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetProductSizeChartList?id=${encodeURIComponent(productId)}&unitType=${encodeURIComponent(unitType)}`,
+            dataType: 'html',
+            onSuccess: function (response) {
+                if (response) {
+                    $('#' + tabId).empty().html(response);
+                    $('.add-size-chart').attr('data-unit-type', unitType);
+                }
+            }
+        });
+    }
+
+    function fnCreate(productId) {
+        fnHandleAjaxRequest({
+            url: `/Product/CreateProductSizeChart?productId=${productId}`,
+            onSuccess: function (response) {
+                if (response) {
+                    var length = $('#modal-size-chart').length;
+                    $('#divCreateSizeChartRow').empty().html(response);
+                    $('#modal-size-chart').modal('show');
+                }
+            },
+            onError: function () {
+                showToastr("Failed to load form.");
+            }
+        });
+    }
+</script>

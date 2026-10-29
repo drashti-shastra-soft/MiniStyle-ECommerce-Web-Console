@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "Product Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!--begin::Container-->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Dashboard")">Home</a></li>
+                        <li class="breadcrumb-item active">Product</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!--end::Container-->
+    <!--begin::App Content-->
+    <section class="content">
+        <div class="col-12">
+            <div class="card card-primary card-tabs">
+                <div class="card-header p-0 pt-1">
+                    <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-product-tab" data-toggle="pill" href="#custom-tabs-product" role="tab" aria-controls="custom-tabs-product" aria-selected="true" data-id="@ViewBag.ProductId">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-details-tab" data-toggle="pill" href="#custom-tabs-details" role="tab" aria-controls="custom-tabs-details" aria-selected="true" data-id="@ViewBag.ProductId">Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-age-group-tab" data-toggle="pill" href="#custom-tabs-age-group" role="tab" aria-controls="custom-tabs-age-group" aria-selected="false" data-id="@ViewBag.ProductId">Age Group</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-color-tab" data-toggle="pill" href="#custom-tabs-color" role="tab" aria-controls="custom-tabs-color" aria-selected="false" data-id="@ViewBag.ProductId">Color</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-product-price-tab" data-toggle="pill" href="#custom-tabs-product-price" role="tab" aria-controls="custom-tabs-product-price" aria-selected="false" data-id="@ViewBag.ProductId">Price</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-image-tab" data-toggle="pill" href="#custom-tabs-image" role="tab" aria-controls="custom-tabs-image" aria-selected="false" data-id="@ViewBag.ProductId">Images</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-size-chart-tab" data-toggle="pill" href="#custom-tabs-size-chart" role="tab" aria-controls="custom-tabs-size-chart" aria-selected="false" data-id="@ViewBag.ProductId">Size Chart</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-two-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-product" role="tabpanel" aria-labelledby="custom-tabs-product-tab">
+                            @using (Ajax.BeginForm("SaveProduct", "Product", new AjaxOptions() { UpdateTargetId = "div-custom-tabs-product", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading-element" }, new { @id = "frmProduct" }))
+                            {
+                                <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                <div id="div-custom-tabs-product"></div>
+                            }
+                        </div>
+                        <div class="tab-pane fade show" id="custom-tabs-details" role="tabpanel" aria-labelledby="custom-tabs-details-tab">
+                            @using (Ajax.BeginForm("UpsertProductDetail", "Product", new AjaxOptions() { UpdateTargetId = "div-custom-tabs-details", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading-element" }, new { @id = "frmProductDetail" }))
+                            {
+                                <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                <div id="div-custom-tabs-details"></div>
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-age-group" role="tabpanel" aria-labelledby="custom-tabs-age-group-tab">
+                            @using (Ajax.BeginForm("SaveProductAgeGroup", "Product", new AjaxOptions() { UpdateTargetId = "div-custom-tabs-age-group", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading-element" }, new { @id = "frmProductAgeGroup" }))
+                            {
+                                <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                <div id="div-custom-tabs-age-group"></div>
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-color" role="tabpanel" aria-labelledby="custom-tabs-color-tab">
+                            @using (Ajax.BeginForm("SaveProductColor", "Product", new AjaxOptions() { UpdateTargetId = "div-custom-tabs-color", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading-element" }, new { @id = "frmProductColor" }))
+                            {
+                                <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                <div id="div-custom-tabs-color"></div>
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-product-price" role="tabpanel" aria-labelledby="custom-tabs-product-price-tab">
+                            @using (Ajax.BeginForm("SaveProductPrice", "Product", new AjaxOptions() { UpdateTargetId = "div-custom-tabs-product-price", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading-element" }, new { @id = "frmProductPrice" }))
+                            {
+                                <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                <div id="div-custom-tabs-product-price"></div>
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-image" role="tabpanel" aria-labelledby="custom-tabs-image-tab">
+                            @using (Ajax.BeginForm("SaveProductImage", "Product", new AjaxOptions { UpdateTargetId = "div-custom-tabs-product-images", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading-element" }, new { enctype = "multipart/form-data", @id = "frmProductImage" }))
+                            {
+                                <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                <div id="div-custom-tabs-product-images"></div>
+                            }
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-size-chart" role="tabpanel" aria-labelledby="custom-tabs-size-chart-tab">
+                            <input type="hidden" id="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                            <div id="div-custom-tabs-size-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function () {
+        
+        $('#custom-tabs-product-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetProduct(id);
+            }
+        });
+
+        $('#custom-tabs-details-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetProductDetail(id);
+            }
+        });
+
+        $('#custom-tabs-age-group-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetAgeGroup(id);
+            }
+        });
+
+
+        $('#custom-tabs-color-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetColor(id);
+            }
+        });
+
+        $('#custom-tabs-product-price-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetProductPrice(id);
+
+            }
+        });
+
+        $('#custom-tabs-size-chart-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetProductSizeChart(id);
+
+            }
+        });
+
+        $('#custom-tabs-image-tab').on('click', function () {
+            var id = parseInt($(this).data('id'));
+            if (id > 0) {
+                fnGetProductImage(id);
+            }
+        });
+
+        $('#custom-tabs-product-tab').trigger('click');
+    });
+
+    function fnGetProduct(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetProduct/${id}`,
+            onSuccess: function (html) {
+                $('#div-custom-tabs-product').html(html);
+            }
+        });
+    }
+
+    function fnGetProductDetail(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetProductDetail/${id}`,
+            onSuccess: function (html) {
+                $('#div-custom-tabs-details').html(html);
+            }
+        });
+    }
+
+    function fnGetAgeGroup(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetAgeGroup/${id}`,
+            onSuccess: function (html) {
+                $('#div-custom-tabs-age-group').html(html);
+            }
+        })
+    }
+    function fnGetProductPrice(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetProductPrice/${id}`,
+            onSuccess: function (html) {
+                $('#div-custom-tabs-product-price').html(html);
+            }
+        })
+    }
+
+    function fnGetProductSizeChart(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetProductSizeChart/${id}`,
+            onSuccess: function (html) {
+                $('#div-custom-tabs-size-chart').html(html);
+            }
+        })
+    }
+
+    function fnGetColor(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetColor/${id}`,
+            onSuccess: function (html) {
+                $('#div-custom-tabs-color').html(html);
+            }
+        });
+    }
+
+
+    function fnGetProductImage(id) {
+        fnHandleAjaxRequest({
+            url: `/Product/GetProductImages/${id}`,
+            onSuccess: function (html) {
+                $('#custom-tabs-image').html(html);
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,111 @@
+﻿@model MiniStyleWebConsole.Domain.Order
+
+<div class="modal fade" id="modal-order" tabindex="-1" aria-labelledby="OrderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @if (Model.Id > 0)
+                {
+                    <h5 class="modal-title fs-5" id="OrderLabel">Edit Order</h5>
+                }
+                else
+                {
+                    <h5 class="modal-title fs-5" id="OrderLabel">Add Order</h5>
+                }
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(m => m.Id)
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Full Name <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Enter Full Name", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Line 1 <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Line1, new { @class = "form-control", placeholder = "Enter Line 1", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label>Line 2 </label>
+                        @Html.TextBoxFor(m => m.Line2, new { @class = "form-control", placeholder = "Enter Line 2", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Landmark <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Landmark, new { @class = "form-control", placeholder = "Enter Landmark", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Zip Code <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", placeholder = "Enter Zip Code", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+
+                    
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>City <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "Enter City", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label>State <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.State, new { @class = "form-control", placeholder = "Enter State", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+                    
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Order Date <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.OrderDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Total Amount <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", placeholder = "Enter Total Amount", @readonly = "readonly" })
+                        <span class="text-danger"></span>
+                    </div>
+                    
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Payment Status <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.PaymentStatus, ViewBag.PaymentStatus as List<SelectListItem>, "Select Payment Status", new { @class = "form-control" })
+                        @*@Html.TextBoxFor(m => m.PaymentStatus, new { @class = "form-control", placeholder = "Enter Payment Status" })*@
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label>Shipping Status <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.ShippingStatus, ViewBag.ShippingStatus as List<SelectListItem>, "Select Shipping Status", new { @class = "form-control" })
+                        @*@Html.TextBoxFor(m => m.ShippingStatus, new { @class = "form-control", placeholder = "Enter Shipping Status" })*@
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="javascript:void(0);" class="btn btn-primary btn-submit">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Hidden("NotificationType", (object)ViewBag.NotificationType)
+@Html.Hidden("NotificationMsg", (object)ViewBag.NotificationMsg)
+
+<script src="@Url.Content("~/custom-js/order/create.js")"></script>

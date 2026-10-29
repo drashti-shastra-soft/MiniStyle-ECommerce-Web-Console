@@ -1,0 +1,95 @@
+﻿@model MiniStyleWebConsole.Domain.ProductPrice
+
+<div class="card">
+    <div class="card-body">
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.ProductId)
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>Purchase Price <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.PurchasePrice, new { @class = "form-control", placeholder = "Enter Purchase Price" })
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>Sell Price <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.SellPrice, new { @class = "form-control", placeholder = "Enter Sell Price" })
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>Discount in % </label>
+                @Html.TextBoxFor(m => m.DiscountPercentage, new { @class = "form-control", placeholder = "Enter Discount in %" })
+                <span class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer clearfix" style="background-color: white; text-align:right">
+        <a href="javascript:void(0);" class="btn btn-primary btn-submit">Save</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+    $(".btn-submit").click(function () {
+        if (fnValidation()) {
+            $('#frmProductPrice').submit();
+        }
+    });
+
+    var notificationType = $.trim('@ViewBag.NotificationType');
+    var notificationMsg = $.trim('@ViewBag.NotificationMsg');
+
+    if (notificationType != null && notificationType != undefined && notificationType != '') {
+        if (notificationMsg != null && notificationMsg != undefined && notificationMsg != '') {
+            showToastr(notificationType, notificationMsg)
+        }
+    }
+
+    $('#DiscountPercentage').mask('000%');
+
+    function fnValidation() {
+        var isValid = true;
+        var purchasePrice = $.trim($("#PurchasePrice").val());
+        var sellPrice = $.trim($("#SellPrice").val());
+        var discountPercentage = $.trim($("#DiscountPercentage").val()).replace(/[^\d]/g, '');
+
+        //Purchase Price
+        if (purchasePrice == null || purchasePrice == "" || purchasePrice == undefined) {
+            $("#PurchasePrice").next("span").text("Purchase price is required!");
+            isValid = false;
+        } else if (parseInt(purchasePrice) <= 0) {
+            $("#PurchasePrice").next("span").text("Purchase price must be greater than zero!");
+            isValid = false;
+        }else {
+            $("#PurchasePrice").next("span").text("");
+        }
+
+        //Sell Price
+        if (sellPrice == null || sellPrice == "" || sellPrice == undefined) {
+            $("#SellPrice").next("span").text("Sell price is required!");
+            isValid = false;
+        } else if (parseInt(sellPrice) <= 0) {
+            $("#SellPrice").next("span").text("Sell price must be greater than zero!");
+            isValid = false;
+        }else {
+            $("#SellPrice").next("span").text("");
+        }
+
+        //Discount Percentage
+        if (isNaN(discountPercentage) || discountPercentage < 0 || discountPercentage > 100) {
+            $("#DiscountPercentage").next("span").text("Please enter a valid discount between 0% and 100%!");
+            isValid = false;
+        } else {
+            $("#DiscountPercentage").next("span").text("");
+        }
+
+
+        return isValid;
+    }
+
+});
+</script>

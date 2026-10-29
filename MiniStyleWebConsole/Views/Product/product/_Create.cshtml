@@ -1,0 +1,168 @@
+﻿@model MiniStyleWebConsole.Domain.Product
+
+<div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="UserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @if (Model.Id > 0)
+                {
+                    <h5 class="modal-title fs-5" id="UserLabel">Edit Product</h5>
+                }
+                else
+                {
+                    <h5 class="modal-title fs-5" id="UserLabel">Add Product</h5>
+                }
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+
+            <div class="modal-body">
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Sub Category <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.SubCategoryId, ViewBag.SubCategory as List<SelectListItem>, "Select Sub Category", new { @class = "form-control" })
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Micro Category</label>
+                        @Html.DropDownListFor(m => m.MicroCategoryId, ViewBag.MicroCategory as List<SelectListItem>, "Select Micro Category", new { @class = "form-control" })
+                        <span class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="row mb-3">
+
+                    <div class="col">
+                        <label>Code <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", placeholder = "Enter Code" })
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Name <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>Short Info <span class="text-danger">*</span></label>
+                        @Html.TextAreaFor(m => m.ShortInfo, new { @class = "form-control", placeholder = "Enter Short Description", rows = 5 })
+                        <span class="text-danger"></span>
+                    </div>
+
+
+                    @*<div class="col">
+                            <label>Unit Price <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.UnitPrice, new { @class = "form-control", placeholder = "Enter Unit Price" })
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="col">
+                            <label>Discount in % </label>
+                            @Html.TextBoxFor(m => m.DiscountPercentage, new { @class = "form-control", placeholder = "Enter Discount in %" })
+                            <span class="text-danger"></span>
+                        </div>*@
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                            <label class="form-check-label" for="isActiveCheck">Is Active?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="javascript:void(0);" class="btn btn-primary btn-submit">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Hidden("NotificationType", (object)ViewBag.NotificationType)
+@Html.Hidden("NotificationMsg", (object)ViewBag.NotificationMsg)
+
+<script>
+    $(document).ready(function () {
+        $('#Name').on('input', function () {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+
+        $('#ShortInfo').on('input', function () {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+
+        $(".btn-submit").click(function () {
+            if (fnValidation()) {
+                $('#frmCreate').submit();
+            }
+        });
+
+        $('#DiscountPercentage').mask('00%');
+
+        var notificationType = $.trim($('#NotificationType').val());
+        var notificationMsg = $.trim($('#NotificationMsg').val());
+
+        if (notificationType != null && notificationType != undefined && notificationType != '') {
+            if (notificationMsg != null && notificationMsg != undefined && notificationMsg != '') {
+                showToastr(notificationType, notificationMsg)
+                $('.modal').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                $('#frmList').submit();
+            }
+        }
+    });
+
+    function fnValidation() {
+
+        var isValid = true;
+        var code = $.trim($("#Code").val());
+        var name = $.trim($("#Name").val());
+        var shortInfo = $.trim($("#ShortInfo").val());
+        var subcategoryId = $.trim($("#SubCategoryId").val());
+
+        //Code
+        if (code == null || code == "" || code == undefined) {
+            $("#Code").next("span").text("Code is required!");
+            isValid = false;
+        } else {
+            $("#Code").next("span").text("");
+        }
+
+        //Name
+        if (name == null || name == "" || name == undefined) {
+            $("#Name").next("span").text("Name is required!");
+            isValid = false;
+        } else {
+            $("#Name").next("span").text("");
+        }
+
+        //Short Info
+        if (shortInfo == null || shortInfo == "" || shortInfo == undefined) {
+            $("#ShortInfo").next("span").text("Short Info is required!");
+            isValid = false;
+        } else {
+            $("#ShortInfo").next("span").text("");
+        }
+
+        //SubCategory
+        if (subcategoryId == null || subcategoryId == "" || subcategoryId == undefined || subcategoryId == "Select Category") {
+            $("#SubCategoryId").next("span").text("Sub Category is required!");
+            isValid = false;
+        } else {
+            $("#SubCategoryId").next("span").text("");
+        }
+
+        return isValid;
+    }
+</script>

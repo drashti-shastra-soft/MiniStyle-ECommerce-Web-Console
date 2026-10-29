@@ -1,0 +1,92 @@
+﻿@model MiniStyleWebConsole.Domain.ProductDetail
+
+<div class="card">
+    <div class="card-body">
+        @Html.HiddenFor(m => m.ProductDetailId)
+        @Html.HiddenFor(m => m.ProductId)
+
+        <div class="row mb-3">
+            <div class="col">
+                <label>Description <span class="text-danger">*</span></label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control summernote", placeholder = "Enter Description" })
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>How to Care <span class="text-danger">*</span></label>
+                @Html.TextAreaFor(m => m.Specification, new { @class = "form-control summernote", placeholder = "Enter How to Care" })
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>Fabric <span class="text-danger">*</span></label>
+                @Html.DropDownListFor(m => m.FabricId, ViewBag.Fabric as List<SelectListItem>, "Select Fabric", new { @class = "form-control" })
+                <span class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="card-footer clearfix" style="background-color: white; text-align:right">
+        <a href="javascript:void(0);" class="btn btn-primary btn-submit">Save</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".btn-submit").click(function () {
+            if (fnValidation()) {
+                $('#frmProductDetail').submit();
+            }
+        });
+
+        var notificationType = $.trim('@ViewBag.NotificationType');
+        var notificationMsg = $.trim('@ViewBag.NotificationMsg');
+
+        if (notificationType != null && notificationType != undefined && notificationType != '') {
+            if (notificationMsg != null && notificationMsg != undefined && notificationMsg != '') {
+                showToastr(notificationType, notificationMsg)
+            }
+        }
+
+        // Initialize Summernote
+        $('.summernote').summernote();
+        //$("#FabricId").val('@Model.FabricId').trigger("change");
+       
+    });
+
+    function fnValidation() {
+        var isValid = true;
+        var description = $.trim($("#Description").val());
+        var specification = $.trim($("#Specification").val());
+        var fabricId = $.trim($("#FabricId").val());
+        
+
+        //Description
+        if (description == null || description == "" || description == undefined) {
+            $("#Description").next("span").text("Description is required!");
+            isValid = false;
+        } else {
+            $("#Description").next("span").text("");
+        }
+
+        //Specification
+        if (specification == null || specification == "" || specification == undefined) {
+            $("#Specification").next("span").text("Specification is required!");
+            isValid = false;
+        } else {
+            $("#Specification").next("span").text("");
+        }
+       
+        //Fabric
+        if (fabricId == null || fabricId == "" || fabricId == undefined || fabricId == "Select Fabric") {
+            $("#FabricId").next("span").text("Fabric is required!");
+            isValid = false;
+        } else {
+            $("#FabricId").next("span").text("");
+        }
+        
+        return isValid;
+    }
+</script>
